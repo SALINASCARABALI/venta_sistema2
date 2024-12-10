@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Venta</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/ventas.css') }}">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4 text-white">Registrar Venta</h1>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-container card p-4 shadow-sm mb-5">
+                    <form id="ventaForm">
+                        <div class="mb-3">
+                            <label for="producto_id" class="form-label">Producto:</label>
+                            <select class="form-select" id="producto_id" name="producto_id" required>
+                                <option value="">Seleccione un producto</option>
+                                {% for producto in productos %}
+                                    <option value="{{ producto.id_producto }}" data-nombre="{{ producto.nombre }}" data-precio="{{ producto.precio }}">
+                                        {{ producto.nombre }} (Precio: ${{ "{:,.2f}".format(producto.precio) }})
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="cantidad" class="form-label">Cantidad:</label>
+                            <input type="number" class="form-control" id="cantidad" name="cantidad" min="1" required>
+                        </div>
+                        <button type="button" id="agregarProducto" class="btn btn-primary w-100">Agregar Producto</button>
+                    </form>
+                    {% if mensaje %}
+                        <div id="successMessage" class="alert alert-success mt-3" role="alert">
+                            {{ mensaje }}
+                        </div>
+                    {% endif %}
+                    <br>
+                    <button id="registrarVenta" class="btn btn-success mt-3 w-50">Registrar Venta</button>
+                    <button id="clearScreenButton" class="btn btn-secondary mt-3 w-50">Limpiar Pantalla</button>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="ventas-container card p-4 shadow-sm">
+                    <ul id="ventasList" class="list-group"></ul>
+                    <div class="mt-3">
+                        <span class="fw-bold">TOTAL:</span>
+                        <span id="totalValue" class="fw-bold">0.00</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para los datos del cliente -->
+    <div class="modal fade" id="clienteModal" tabindex="-1" aria-labelledby="clienteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="clienteModalLabel">Datos del Cliente</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="clienteForm">
+                        <div class="mb-3">
+                            <label for="cliente" class="form-label">Nombre Cliente:</label>
+                            <input type="text" class="form-control" id="cliente" name="cliente" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Correo Electrónico del Cliente:</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="whatsapp" class="form-label">Número de WhatsApp del Cliente:</label>
+                            <input type="tel" class="form-control" id="whatsapp" name="whatsapp" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" id="confirmarVenta" class="btn btn-primary">Confirmar Venta</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botones de navegación -->
+    <div class="row mt-4">
+        <div class="col-md-12 text-center">
+            <a href="{{ url_for('main.home') }}" class="btn btn-primary">Inicio</a>
+            <a href="javascript:history.back()" class="btn btn-secondary">Atrás</a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script>
+        console.log('JavaScript cargado correctamente.');
+
+        let totalAcumulado = 0;
+        let productosVenta = [];
+
+        document.getElementById('agregarProducto').addEventListener('click', function() {
+            const productoSelect = document.getElementById('producto_id');
+            const cantidadInput = document.getElementById('cantidad');
+            const nombreProducto = productoSelect.options[productoSelect.selectedIndex].getAttribute('data-nombre');
+            const cantidad = parseInt(cantidadInput.value);
+
+            if (!nombreProducto || cantidad <= 0) {
+                alert('Por favor, seleccione un producto y especifique una cantidad válida.');
+                return;
+            }
+
+            console.log(`Buscando producto: ${nombreProducto}`);
+
+            fetch(`/buscar_producto?nombre=${encodeURIComponent(nombreProducto)}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        alert('Error al buscar el producto: ' + data.error);
+                    } else {
+                        const stockDisponible = data.stock;
+                        if (cantidad > stockDisponible) {
+                            alert(`No hay suficiente stock disponible. Solo quedan ${stockDisponible} unidades.`);
+                        } else {
+                            const totalProducto = (data.precio * cantidad).toFixed(2);
+                            productosVenta.push({ id: data.id_producto, nombre: data.nombre, cantidad, precio: data.precio, total: parseFloat(totalProducto) });
+
+                            const ventasList = document.getElementById('ventasList');
+                            const listItem = document.createElement('li');
+                            listItem.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
+                            listItem.textContent = `${data.nombre} - Cantidad: ${cantidad} - Precio: $${data.precio.toFixed(2)} - Total: $${totalProducto}`;
+                            ventasList.appendChild(listItem);
+
+                            totalAcumulado += parseFloat(totalProducto);
+                            document.getElementById('totalValue').textContent = totalAcumulado.toFixed(2);
+
+                            // Limpiar campos
+                            productoSelect.value = '';
+                            cantidadInput.value = '';
+                        }
+                    }
+                })
+                .catch(error => {
+                    alert('Error al buscar el producto: ' + error.message);
+                });
+        });
+
+        document.getElementById('clearScreenButton').addEventListener('click', function() {
+            console.log('Botón "Limpiar Pantalla" clickeado.');
+            document.getElementById('ventasList').innerHTML = '';
+            document.getElementById('totalValue').textContent = '0.00';
+            totalAcumulado = 0;
+            productosVenta = [];
+        });
+
+        document.getElementById('registrarVenta').addEventListener('click', function() {
+            if (productosVenta.length === 0) {
+                alert('No hay productos en la venta.');
+                return;
+            }
+
+            const clienteModal = new bootstrap.Modal(document.getElementById('clienteModal'));
+            clienteModal.show();
+
+            document.getElementById('confirmarVenta').addEventListener('click', function() {
+                const cliente = document.getElementById('cliente').value;
+                const email = document.getElementById('email').value;
+                const whatsapp = document.getElementById('whatsapp').value;
+
+                if (!cliente || !email || !whatsapp) {
+                    alert('Por favor, complete todos los campos del cliente.');
+                    return;
+                }
+
+                const ventaData = {
+                    productos: productosVenta,
+                    cliente: cliente,
+                    email: email,
+                    whatsapp: whatsapp
+                };
+
+                fetch('/ventas', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(ventaData)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        alert('Error al registrar la venta: ' + data.error);
+                    } else {
+                        alert('Venta registrada con éxito.');
+                        window.location.href = data.redirect;
+                    }
+                })
+                .catch(error => {
+                    alert('Error al registrar la venta: ' + error.message);
+                });
+
+                clienteModal.hide();
+            });
+        });
+    </script>
+</body>
+</html>

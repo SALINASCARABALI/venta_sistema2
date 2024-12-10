@@ -1,0 +1,31 @@
+/* Estilos específicos para la página de ventas */
+
+/* Estilo para el contenedor del formulario */
+.form-container {
+    background-color: #f8f9fa;
+}
+
+/* Estilo para la lista de ventas */
+.ventas-container {
+    background-color: #ffffff;
+}
+
+/* Estilo para los botones */
+.btn {
+    border-radius: 0.25rem;
+}
+
+/* Estilo para los elementos de la lista de ventas */
+.list-group-item {
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+}
+body {
+  
+    background-image: url('../img/gmatt2.jpg');
+    background-size: 1300px 1000px; /* Ajusta el tamaño de la imagen */
+    background-position: center 2%; /* Desplaza la imagen hacia abajo */
+    background-repeat: repeat; /* Evita que la imagen se repita */
+    height: 600vh;
+    width: 100%;
+}

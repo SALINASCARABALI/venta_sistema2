@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio</title>
+    <!-- Enlace a Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Enlace a tu CSS personalizado -->
+    <link rel="stylesheet" href="static/css/index.css">
+    <style>
+        /* Estilos para el sidebar */
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #343a40;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 20px;
+            padding-left: 10px;
+        }
+
+        .sidebar img {
+            width: 100%;
+            max-width: 200px;
+            margin-bottom: 20px;
+        }
+
+        .sidebar a {
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 18px;
+            color: #fff;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #575d63;
+        }
+
+        .sidebar .close-btn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+
+        .open-btn {
+            font-size: 20px;
+            cursor: pointer;
+            background-color: #343a40;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 2;
+        }
+
+        .content {
+            transition: margin-left 0.5s;
+            padding: 16px;
+        }
+
+        /* Estilos para el muñeco animado */
+        .muñeco-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: calc(100vh - 80px); /* Resta la altura del header */
+        }
+
+        #muñeco {
+            position: relative;
+            width: 100px;
+            height: 200px;
+        }
+
+        .cabeza {
+            width: 100px;
+            height: 100px;
+            background-color: #ffcc99;
+            border-radius: 50%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .cuerpo {
+            width: 80px;
+            height: 100px;
+            background-color: #000;
+            position: absolute;
+            top: 100px;
+            left: 10px;
+        }
+
+        .brazo-izquierdo, .brazo-derecho {
+            width: 20px;
+            height: 80px;
+            background-color: #ffcc99;
+            position: absolute;
+            top: 100px;
+            animation: wave 2s infinite;
+        }
+
+        .brazo-izquierdo {
+            left: -20px;
+            transform-origin: top;
+        }
+
+        .brazo-derecho {
+            right: -20px;
+            transform-origin: top;
+        }
+
+        .pierna-izquierda, .pierna-derecha {
+            width: 20px;
+            height: 80px;
+            background-color: #000;
+            position: absolute;
+            top: 200px;
+        }
+
+        .pierna-izquierda {
+            left: 20px;
+        }
+
+        .pierna-derecha {
+            right: 20px;
+        }
+
+        @keyframes wave {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(30deg); }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Bienvenido a G-Matt Publicidad</h1>
+    </header>
+
+    <!-- Botón para abrir el sidebar -->
+    <button class="open-btn" onclick="openSidebar()">☰ Menú</button>
+
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar">
+        <a href="javascript:void(0)" class="close-btn" onclick="closeSidebar()">&times;</a>
+        <!-- Logo del sidebar -->
+        <br><br><br>
+        <img src="static/img/logo.jpeg" alt="Logo">
+        <a href="login.html">Iniciar Sesión</a>
+        <a href="register.html">Registrar</a>
+        <a href="ventas.html">Ventas</a>
+        <a href="productos.html">Productos</a>
+        <a href="clientes.html">Clientes</a>
+        <a href="proveedores.html">Proveedores</a>
+    </div>
+
+    <!-- Contenido Principal -->
+    <div class="content">
+        <div class="muñeco-container">
+            <div id="muñeco">
+                <div class="cabeza"></div>
+                <div class="cuerpo"></div>
+                <div class="brazo-izquierdo"></div>
+                <div class="brazo-derecho"></div>
+                <div class="pierna-izquierda"></div>
+                <div class="pierna-derecha"></div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 G-Matt Publicidad. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- Enlace a jQuery y Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Enlace a tu JS personalizado -->
+    <script src="static/js/scripts.js"></script>
+    <script>
+        /* Función para abrir el sidebar */
+        function openSidebar() {
+            document.getElementById("sidebar").style.width = "250px";
+            document.querySelector(".content").style.marginLeft = "250px";
+        }
+
+        /* Función para cerrar el sidebar */
+        function closeSidebar() {
+            document.getElementById("sidebar").style.width = "0";
+            document.querySelector(".content").style.marginLeft = "0";
+        }
+    </script>
+</body>
+</html>

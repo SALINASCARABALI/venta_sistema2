@@ -1,0 +1,64 @@
+/* Estilos generales del cuerpo */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    background-image: url('../img/gmatt2.jpg');
+
+    padding: 0;
+   
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Contenedor del formulario */
+.form-container {
+    width: 100%;
+    max-width: 500px; /* Ajusta el ancho máximo del contenedor para ser consistente con el nuevo diseño */
+    background: #fff;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+}
+
+/* Título del formulario */
+.form-title {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #343a40; /* Color del texto más oscuro para mejor contraste */
+}
+
+/* Estilos del botón personalizado */
+.btn-custom {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 0.75rem 1.25rem; /* Tamaño del botón ajustado a los estándares de Bootstrap */
+    border-radius: 0.25rem;
+    cursor: pointer;
+}
+
+.btn-custom:hover {
+    background-color: #0056b3;
+    color: #fff;
+}
+
+/* Estilos del formulario */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Ajustes en los campos de entrada */
+form input[type="text"],
+form input[type="password"] {
+    padding: 0.75rem; /* Ajuste del padding para ser consistente con Bootstrap */
+    margin-bottom: 1rem; /* Margen inferior actualizado */
+    border: 1px solid #ced4da; /* Color del borde ajustado para mejor integración con Bootstrap */
+    border-radius: 0.25rem; /* Radio del borde ajustado */
+}
+
+        
