@@ -1,6 +1,6 @@
 /* Estilos básicos */
 body {
-    background-image: url('../img/gmatt2.jpg');
+    background-color: #aab0cc;
     background-size: 1300px 1000px; /* Ajusta el tamaño de la imagen */
     background-position: center 2%; /* Desplaza la imagen hacia abajo */
     background-repeat: repeat; /* Evita que la imagen se repita */
@@ -10,7 +10,7 @@ body {
 
 /* Encabezado */
 header {
-    background-color: #b5d6eb;
+    background-color: #343a3d;
     color: #ffffff;
     padding: 10px 0;
     text-align: center;
