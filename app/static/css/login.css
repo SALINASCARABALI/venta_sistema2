@@ -2,19 +2,19 @@
         body {
           
   
-                background-image: url('../img/principal2.jpg');
-                background-size: 1300px 1000px; /* Ajusta el tamaño de la imagen */
-                background-position: center 2%; /* Desplaza la imagen hacia abajo */
-                background-repeat: no-repeat; /* Evita que la imagen se repita */
-                height: 600vh;
-                width: 100%;            
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 0;
+            background-image: url('../img/principal2.jpg');
+            background-position: right;
             padding: 0;
+           
             display: flex;
             justify-content: center;
             align-items: center;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+
             height: 100vh;
         }
         .form_container {

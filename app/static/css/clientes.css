@@ -1,18 +1,20 @@
 body {
     font-family: 'Arial', sans-serif;
-    background-image: url('../img/principal2.jpg');
+    background-image: url('../img/principal.jpg');
     color: #333;
+    background-position:right;
 }
 
 .container {
-    max-width: 900px;
+    max-width: 600px;
     margin: 0 auto;
     padding: 20px;
 }
 
 h1 {
-    color: #f8fbfd;
+    color: #1d2022;
     font-weight: bold;
+    
 }
 
 .card {
