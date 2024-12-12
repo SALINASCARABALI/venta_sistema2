@@ -1,4 +1,12 @@
 /* Estilos específicos para la página de ventas */
+body {
+    background-image: url('../img/principal2.jpg');
+    background-size: 1300px 1000px; /* Ajusta el tamaño de la imagen */
+    background-position: center 2%; /* Desplaza la imagen hacia abajo */
+    background-repeat: repeat; /* Evita que la imagen se repita */
+    height: 600vh;
+    width: 100%;
+}
 
 /* Estilo para el contenedor del formulario */
 .form-container {

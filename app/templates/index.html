@@ -145,12 +145,7 @@
 </head>
 <body>
     <header>
-        <h1>Bienvenido a G-Matt Publicidad </h1>
-        <style>
-            h1{
-                text-align: center;
-            }
-        </style>
+        <h1>Bienvenido a G-Matt Publicidad</h1>
     </header>
 
     <!-- Botón para abrir el sidebar -->
@@ -159,31 +154,25 @@
     <!-- Sidebar -->
     <div id="sidebar" class="sidebar">
         <a href="javascript:void(0)" class="close-btn" onclick="closeSidebar()">&times;</a>
-        <!-- Logo del sidebar -->
-        <br><br><br>
-        <img src="static/img/logo.jpeg" alt="Logo">
-        <a href="login.html">Iniciar Sesión</a>
-        <a href="register.html">Registrar</a>
-        <a href="ventas.html">Ventas</a>
-        <a href="productos.html">Productos</a>
-        <a href="clientes.html">Clientes</a>
-        <a href="proveedores.html">Proveedores</a>
-    </div>
-
-    <!-- Contenido Principal -->
-    <div class="content">
-        <div class="muñeco-container">
-            <div id="muñeco">
-                <img src="" alt="muñeco">
-                <div class="cabeza"></div>
-                <div class="cuerpo"></div>
-                <div class="brazo-izquierdo"></div>
-                <div class="brazo-derecho"></div>
-                <div class="pierna-izquierda"></div>
-                <div class="pierna-derecha"></div>
+        br>
+        <br>
+        <br>
+        <img src="{{ url_for('static', filename='img/logo.jpeg') }}" alt="Logo">
+        
+                
+                <a href="{{ url_for('main.login') }}">Iniciar Sesión</a>
+                <a href="{{ url_for('main.register') }}">Registrar</a>
+                <a href="{{ url_for('main.ventas_page') }}">Ventas</a>
+                <a href="{{ url_for('main.productos_page') }}">Productos</a>
+                <a href="{{ url_for('main.clientes_page') }}">clientes</a>
+                <a href="{{ url_for('main.proveedores_page') }}">Proveedores</a>
+               
             </div>
-        </div>
-    </div>
+        
+          
+        
+    <!-- Contenido Principal -->
+   
 
     <footer>
         <p>&copy; 2024 G-Matt Publicidad. Todos los derechos reservados.</p>
