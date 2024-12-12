@@ -1,7 +1,7 @@
 /* Estilos básicos */
 body {
     background-image: url('../img/principal.jpg');
-    background-size: 1300px 1000px; /* Ajusta el tamaño de la imagen */
+    background-size: 1300px 900px; /* Ajusta el tamaño de la imagen */
     background-position: center 2%; /* Desplaza la imagen hacia abajo */
     background-repeat: repeat; /* Evita que la imagen se repita */
     height: 500vh;
