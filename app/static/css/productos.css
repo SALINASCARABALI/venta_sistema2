@@ -42,3 +42,6 @@ body {
     margin: 0.5rem 0;
     font-size: 0.75rem; /* Tamaño de fuente más pequeño */
 }
+h1, h2 
+{
+    color: #007bff;}
