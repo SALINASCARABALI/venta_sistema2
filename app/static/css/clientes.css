@@ -72,3 +72,10 @@ h1 {
     border-color: #004085;
 }
 h1 {color: #007bff;}
+.table-container {
+    height: 300px; /* Establecer una altura fija */
+    overflow-y: scroll; /* Forzar el scroll vertical */
+    overflow-x: auto; /* Permitir el scroll horizontal si es necesario */
+    border: 1px solid #ddd; /* Borde para mejor visualización */
+    padding: 10px; /* Espacio interno para mejor visualización */
+}

@@ -77,15 +77,15 @@ def ventas_page():
 
             productos = data.get('productos')
             nombre_cliente = data.get('cliente')
-            correo_cliente = data.get('email')
+            email_cliente = data.get('email')
             whatsapp_cliente = data.get('whatsapp')
 
-            if not productos or not nombre_cliente or not correo_cliente or not whatsapp_cliente:
+            if not productos or not nombre_cliente or not email_cliente or not whatsapp_cliente:
                 raise ValueError("Faltan datos de la venta")
 
-            cliente = Cliente.query.filter_by(correo=correo_cliente).first()
+            cliente = Cliente.query.filter_by(email=email_cliente).first()  # Usar `email` en lugar de `correo`
             if not cliente:
-                cliente = Cliente(nombre=nombre_cliente, correo=correo_cliente, whatsapp=whatsapp_cliente)
+                cliente = Cliente(nombre=nombre_cliente, email=email_cliente, whatsapp=whatsapp_cliente)
                 db.session.add(cliente)
 
             total_venta = 0
@@ -110,7 +110,7 @@ def ventas_page():
             factura_data = {
                 'productos': productos,
                 'total': total_venta,
-                'cliente': {'nombre': cliente.nombre, 'correo': correo_cliente, 'whatsapp': whatsapp_cliente},
+                'cliente': {'nombre': cliente.nombre, 'email': email_cliente, 'whatsapp': whatsapp_cliente},  # Usar `email`
                 'fecha': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             }
             return jsonify({'redirect': url_for('main.impresion_factura', factura_data=json.dumps(factura_data))})
@@ -118,6 +118,8 @@ def ventas_page():
             db.session.rollback()
             current_app.logger.error('Error al registrar la venta: %s', e)
             return jsonify({'error': str(e)}), 400
+
+
 
 import os
 
