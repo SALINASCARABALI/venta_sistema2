@@ -30,7 +30,6 @@
                         </div>
                         <button type="submit">Agregar Proveedor</button>
                     </form>
-                    
 
                     {% with messages = get_flashed_messages() %}
                         {% if messages %}
@@ -49,8 +48,11 @@
                     <ul class="list-group">
                         {% if proveedores %}
                             {% for proveedor in proveedores %}
-                                <li class="list-group-item">
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
                                     {{ proveedor.nombre }} - {{ proveedor.contacto }}
+                                    <form action="{{ url_for('main.eliminar_proveedor', id=proveedor.id) }}" method="POST" class="d-inline">
+                                        <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                                    </form>
                                 </li>
                             {% endfor %}
                         {% else %}

@@ -129,6 +129,22 @@ def clientes_page():
     clientes = Cliente.query.all()
     return render_template('clientes.html', clientes=clientes)
 
+
+@main.route('/eliminar_cliente/<int:id>', methods=['POST'])
+@login_required
+def eliminar_cliente(id):
+    cliente = Cliente.query.get_or_404(id)
+    try:
+        db.session.delete(cliente)
+        db.session.commit()
+        flash('Cliente eliminado con éxito.', 'success')
+    except Exception as e:
+        db.session.rollback()
+        current_app.logger.error('Error al eliminar el cliente: %s', e)
+        flash('Error al eliminar el cliente.', 'error')
+    return redirect(url_for('main.clientes_page'))
+
+
 @main.route('/impresion_factura')
 def impresion_factura():
     try:
@@ -217,6 +233,19 @@ def buscar_producto():
         current_app.logger.error('Error al buscar el producto: %s', e)
         return jsonify({'error': 'Error al buscar el producto'}), 500
 
+@main.route('/eliminar_producto/<int:id>', methods=['POST'])
+@login_required
+def eliminar_producto(id):
+    producto = Producto.query.filter_by(id_producto=id).first_or_404()
+    try:
+        db.session.delete(producto)
+        db.session.commit()
+        flash('Producto eliminado con éxito.', 'success')
+    except Exception as e:
+        db.session.rollback()
+        current_app.logger.error('Error al eliminar el producto: %s', e)
+        flash('Error al eliminar el producto.', 'error')
+    return redirect(url_for('main.productos_page'))
 
 @main.route('/proveedores', methods=['GET', 'POST'])
 @login_required
@@ -244,3 +273,17 @@ def proveedores_page():
     
     proveedores_list = Proveedor.query.all()
     return render_template('proveedores.html', proveedores=proveedores_list)
+@main.route('/eliminar_proveedor/<int:id>', methods=['POST'])
+@login_required
+def eliminar_proveedor(id):
+    proveedor = Proveedor.query.get_or_404(id)
+    try:
+        db.session.delete(proveedor)
+        db.session.commit()
+        flash('Proveedor eliminado con éxito.')
+    except Exception as e:
+        db.session.rollback()
+        current_app.logger.error('Error al eliminar el proveedor: %s', e)
+        flash('Error al eliminar el proveedor.', 'error')
+    return redirect(url_for('main.proveedores_page'))
+
